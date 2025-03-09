@@ -1,0 +1,15 @@
+- name: log baidu
+  log: true
+  expr: let sni = string(tls?.req?.sni); sni contains "baidu" || sni contains "360"
+
+- name: block baidu http
+  action: block
+  expr: string(http?.req?.headers?.host) endsWith "baidu.com"
+
+- name: block baidu https
+  action: block
+  expr: string(tls?.req?.sni) endsWith "baidu.com"
+
+- name: block baidu quic
+  action: block
+  expr: string(quic?.req?.sni) endsWith "baidu.com"
